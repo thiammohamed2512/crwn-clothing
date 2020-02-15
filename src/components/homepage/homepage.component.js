@@ -7,5 +7,3 @@ import Directory from '../directory/directory.component';
         <Directory />
     </div>
 )
-
-
