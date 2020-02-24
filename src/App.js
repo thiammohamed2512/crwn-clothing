@@ -3,38 +3,30 @@ import './App.css';
 import {HomePage} from './pages/homepage/homepage.component' 
 import Shop from './pages/shopPage/shop.component'
 import { Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux' 
+import {setCurrentUser } from './components/redux/user/user.actions'
 import Header from './components/header/header.component';
 import SignInSignUp from '../src/pages/sign-in-and-sign-up/sign-in-and-sign-up.component'
 import { auth, CreateUserProfileDocument} from './firebase/firebase.utils';
 
  class App extends Component { 
-   constructor(){
-     super(); 
-
-     this.state = {
-       currrentUser : null
-     }
-   } 
    unSuscribeFromAuth = null; 
 
    componentDidMount = () => { 
-    this.unSuscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+     const {setCurrentUser} = this.props;
+     this.unSuscribeFromAut = auth.onAuthStateChanged(async userAuth => {
       
      if(userAuth) {
        const userRef = await CreateUserProfileDocument(userAuth); 
-      //  console.log(userRef,'5ioshv');
        
        userRef.onSnapshot(snapShot => {
-          this.setState({
-            currrentUser: {
+           setCurrentUser ({
               id: snapShot.id,
               ...snapShot.data()
-            }
-          });
+            })
        }); 
-      //  console.log(this.state, 'mon state'); 
      } 
-         this.setState({currrentUser: userAuth}); 
+     setCurrentUser(userAuth); 
     })
   } 
   componentWillUnmount  = () => {
@@ -43,7 +35,7 @@ import { auth, CreateUserProfileDocument} from './firebase/firebase.utils';
   render() {
     return (
     <div className="App"> 
-      <Header currrentUser={this.state.currrentUser} />
+      <Header />
       <Switch> 
         <Route exact path='/' component={HomePage} />
         <Route path='/shop' component={Shop} /> 
@@ -51,6 +43,9 @@ import { auth, CreateUserProfileDocument} from './firebase/firebase.utils';
       </Switch>
     </div>
     )
-  }
-}
-export default App;
+  } 
+} 
+const mapDispacthToProps = dispacth => ({
+  setCurrentUser: user => dispacth(setCurrentUser(user))
+})
+export default connect(null,mapDispacthToProps) (App);
