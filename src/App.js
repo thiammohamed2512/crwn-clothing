@@ -22,7 +22,7 @@ import { auth, CreateUserProfileDocument} from './firebase/firebase.utils';
       
      if(userAuth) {
        const userRef = await CreateUserProfileDocument(userAuth); 
-       console.log(userRef,'5ioshv');
+      //  console.log(userRef,'5ioshv');
        
        userRef.onSnapshot(snapShot => {
           this.setState({
@@ -32,7 +32,7 @@ import { auth, CreateUserProfileDocument} from './firebase/firebase.utils';
             }
           });
        }); 
-       console.log(this.state, 'mon state'); 
+      //  console.log(this.state, 'mon state'); 
      } 
          this.setState({currrentUser: userAuth}); 
     })

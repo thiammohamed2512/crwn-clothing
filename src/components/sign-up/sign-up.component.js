@@ -83,7 +83,6 @@ class SignUp extends Component {
                         label='confirm Password' 
                         onChange={this.handleChange}
                     /> 
-
                     <CustomButton type="submit"> Sign Up</CustomButton>
                 </form>
             </div>
