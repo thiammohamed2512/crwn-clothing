@@ -14,11 +14,9 @@ import { signInWithGoogle } from '../../firebase/firebase.utils';
      }
      handleSubmit = (e) => {
         e.preventDefault(); 
-        this.setState({password: '', email: ''}) 
-        //  console.log(this.state);   
+        this.setState({password: '', email: ''})  
      }
      handleChange = (e) => {
-     
          this.setState( { [e.target.name] : e.target.value } )
      }
     render() {
