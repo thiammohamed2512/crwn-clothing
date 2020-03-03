@@ -4,10 +4,13 @@ import {HomePage} from './pages/homepage/homepage.component'
 import Shop from './pages/shopPage/shop.component'
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux' 
+import {createStructuredSelector} from 'reselect'
 import {setCurrentUser } from './components/redux/user/user.actions'
 import Header from './components/header/header.component'
 import SignInSignUp from '../src/pages/sign-in-and-sign-up/sign-in-and-sign-up.component'
 import { auth, CreateUserProfileDocument} from './firebase/firebase.utils';
+import { selectCurrentUser } from './components/redux/user/user.selectors';
+import CheckoutPage from './pages/checkout/checkout.component';
 
  class App extends Component { 
    unSuscribeFromAuth = null; 
@@ -30,7 +33,7 @@ import { auth, CreateUserProfileDocument} from './firebase/firebase.utils';
     })
   } 
   componentWillUnmount  = () => {
-    this.unSuscribeFromAuth();  
+    if(this.unSuscribeFromAuth) this.unSuscribeFromAuth();  
   }
   render() {
     return (
@@ -39,6 +42,7 @@ import { auth, CreateUserProfileDocument} from './firebase/firebase.utils';
       <Switch> 
         <Route exact path='/' component={HomePage} />
         <Route path='/shop' component={Shop} /> 
+        <Route exact path='/checkout' component={CheckoutPage} /> 
         <Route exact path='/signin' render={() => 
           this.props.currentUser 
           ? (<Redirect to = '/'/>) 
@@ -50,8 +54,8 @@ import { auth, CreateUserProfileDocument} from './firebase/firebase.utils';
   } 
 }
 
-const mapStateToProps = ({user}) => ({
-  currentUser: user.currentUser
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
 })
 
 const mapDispacthToProps = dispacth => ({
