@@ -17,12 +17,12 @@ const {imageUrl,name,price} = item;
                 <span className='name'> {name} </span>
                 <span className='price'> {price} </span>
             </div> 
-            <CustomButton onclick={() => addItem(item) } inverted> Add to cart </CustomButton>
+            <CustomButton onClick={() => {addItem(item) ;console.log('object')} } inverted > Add to cart </CustomButton>
         </div>
 )}
 
 
 const mapDispatchToProps = dispacth => ({
-    addItem: item => dispacth(addItem(item)) 
+    addItem: item => {dispacth(addItem(item)); } 
 })
 export default connect(null, mapDispatchToProps)(CollectionItem);
